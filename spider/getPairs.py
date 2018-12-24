@@ -1,5 +1,3 @@
-import ast
-
 from connectDB import *
 
 name_dict = {'jxf': '孙悟空', 'nbb': '牛哔哔', 'bb': '无名'}
@@ -9,7 +7,7 @@ def modifyData(session, games, nickname):
         if name_zh_home:
             game.home = name_zh_home
         name_zh_away = getnameZh(session, nickname, game.away)
-        if name_zh_home:
+        if name_zh_away:
             game.away = name_zh_away
 
         game.hdp = eval(game.handicap)
@@ -43,7 +41,7 @@ def getPairs(session):
 
                             ret = 1 / (1 / float(jxf_odds[0]) + 1 / float(nbb_odds[0]))
 
-                            printPairsInfo(jxf_hdp, nbb_hdp, jxf_odds[0], nbb_odds[0], ret, 0.985)
+                            printPairsInfo(jxf_hdp, nbb_hdp, jxf_odds[0], nbb_odds[0], ret, 0.989)
 
                 for jxf_tot, jxf_odds in jxf_game.tot.items():
 
@@ -54,7 +52,7 @@ def getPairs(session):
 
                             ret = 1 / (1 / float(jxf_odds[0]) + 1 / float(nbb_odds[0]))
 
-                            printPairsInfo(jxf_tot, nbb_tot, jxf_odds[0], nbb_odds[0], ret, 0.985)
+                            printPairsInfo(jxf_tot, nbb_tot, jxf_odds[0], nbb_odds[0], ret, 0.989)
                 print("*" * 50)
 
 def rev(str):

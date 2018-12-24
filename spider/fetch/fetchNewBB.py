@@ -53,9 +53,12 @@ def getGameNode(_driver, leagues, newbb_game_node):
         cur_league_node = '//*[@id="asianView"]/div/div[3]/div[4]/div/ng-include/div[2]/div[2]/div[{}]'.format(i + 1)
         cur_league_name = _driver.find_element_by_xpath(cur_league_node + "/div/h3").text
         for league in leagues:
-            if cur_league_name == league.league_name_newbb.upper():
-                cur_league_name = league.league_name_zh
-                break
+            try:
+                if cur_league_name == league.league_name_newbb.upper():
+                    cur_league_name = league.league_name_zh
+                    break
+            except:
+                return
         cur_league_games = _driver.find_elements_by_xpath(cur_league_node + '/table/tbody')
 
         for j in range(len(cur_league_games)):

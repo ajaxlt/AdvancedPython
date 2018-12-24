@@ -3,6 +3,8 @@ from sqlalchemy import Column, Integer, func, and_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy import and_
+import time
+
 from settings import *
 Base = declarative_base()
 
@@ -111,7 +113,8 @@ def getleague(session, league_zh):
     return session.query(leagueNum2Name).filter(leagueNum2Name.league_name_zh.in_(league_zh)).all()
 
 def getrecords(session, type):
-    return session.query(type).filter(type.overdue == 0).all()
+    return session.query(type).filter(and_(type.overdue == 0,
+                                           type.game_date > time.localtime(time.time()))).all()
 
 def getnameZh(session, nickname, nameEn):
     if nickname == 'jxf':

@@ -63,9 +63,8 @@ def selectLeague(_driver, league_info, league_flag, time_flag):
 
 def getGameNode(_driver, leagues, jxf_game_node):
     for league in leagues:
-        cur_node = '//*[@id="cnr-odds"]/div/div/div[3]/div//*[@id="' + league.league_id_jxf + '"]'
-
         try:
+            cur_node = '//*[@id="cnr-odds"]/div/div/div[3]/div//*[@id="{}"]'.format(league.league_id_jxf)
             all_games = _driver.find_elements_by_xpath(cur_node + '/table')
             for i in range(len(all_games)):
                 cur_xpath = '{}/table[{}]'.format(cur_node, i + 1)
@@ -82,7 +81,13 @@ def fetchOdds(_driver, toutou_rlt, cur_game_xpath):
     cur_game_node = _driver.find_element_by_xpath(cur_game_xpath[0])
     item.game_league = cur_game_xpath[1]
     item.game_id = cur_game_node.get_attribute('id')
-    if cur_game_node.get_attribute('pid'):
+
+    try:
+        trash_info = cur_game_node.get_attribute('pid')
+        if trash_info:
+            return
+    except:
+        print('err!')
         return
 
     try:

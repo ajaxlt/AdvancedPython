@@ -24,7 +24,7 @@ def getHTMLText(url):
         print("Failed to getHTML: " + url)
         return None
 
-def fetchOdds(time_flag, league_name, bb_rlt):
+def fetchOdds(time_flag, bb_rlt, league_name):
 
     if not time_flag:
         date = time.strftime("%Y-%m-%d", time.localtime())
@@ -132,9 +132,8 @@ def fetchOdds(time_flag, league_name, bb_rlt):
         item.handicap = str(handicap)
         item.total = str(total)
 
-        '''need to delete'''
-        session = connectDB.connectDB('10.210.82.148')
-        connectDB.submitOdds(session, item)
+        bb_rlt.append(copy.deepcopy(item))
+
 
 def modifyHdp(hdp):
     if '/' in hdp:
